@@ -1,0 +1,10 @@
+# intelliJ
+.idea
+*.iml
+
+# misc
+.DS_Store
+target
+
+# dependencies
+node_modules
