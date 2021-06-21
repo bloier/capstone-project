@@ -2,11 +2,11 @@ import styled from "styled-components/macro";
 import mainLogo from "../../resources/mainLogo.png";
 
 export default function Logo() {
-    return (
-        <LogoWrapper>
-            <LogoSmall src={mainLogo} alt="wordsguru" />
-        </LogoWrapper>
-    );
+  return (
+    <LogoWrapper>
+      <LogoSmall src={mainLogo} alt="wordsguru" />
+    </LogoWrapper>
+  );
 }
 
 const LogoWrapper = styled.div`
@@ -16,8 +16,8 @@ const LogoWrapper = styled.div`
 const LogoSmall = styled.img`
   height: 40%;
   width: 40%;
-  margin-top: 10px;
-  margin-left: 10px;
+  margin-top: 15px;
+  margin-left: 15px;
   margin-bottom: 40px;
   text-align: left;
   vertical-align: top;
