@@ -18,7 +18,7 @@ const LogoSmall = styled.img`
   width: 40%;
   margin-top: 15px;
   margin-left: 15px;
-  margin-bottom: 40px;
+  margin-bottom: 35px;
   text-align: left;
   vertical-align: top;
 `;
