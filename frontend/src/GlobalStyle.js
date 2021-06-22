@@ -8,7 +8,7 @@ export default createGlobalStyle`
     }
     
     html, body {
-      font-family: sans-serif;
+      font-family: "Roboto", "Helvetica Neue", sans-serif;
       color: #000;
       background: #EBF4FF;
     }
