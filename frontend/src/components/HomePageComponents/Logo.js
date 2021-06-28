@@ -10,8 +10,10 @@ export default function Logo() {
 }
 
 const LogoWrapper = styled.div`
-  height: 100%;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
 `;
 const LogoSmall = styled.img`
   height: 40%;
@@ -21,4 +23,5 @@ const LogoSmall = styled.img`
   margin-bottom: 35px;
   text-align: left;
   vertical-align: top;
+  horizontal-align: left;
 `;
