@@ -3,14 +3,11 @@ import Logo from "../components/HomePageComponents/Logo";
 import useLetters from "../hooks/useLetters";
 import { useEffect, useState } from "react";
 import useWords from "../hooks/useWords";
-import { useForm } from "react-hook-form";
 
 export default function GamePage() {
   const { letters } = useLetters();
   const [word, setWord] = useState("");
-  const { addWordToWordsList } = useWords();
-  const [allTypedInWords, setAllTypedInWords] = useState([]);
-  const { reset } = useForm();
+  const { allTypedInWords, addWordToWordsList } = useWords();
 
   useEffect(() => {
     if (letters) {
@@ -21,8 +18,7 @@ export default function GamePage() {
   const handleSubmit = (event) => {
     event.preventDefault();
     addWordToWordsList(word);
-    setAllTypedInWords([...allTypedInWords, word]);
-    reset({ word });
+    setWord(letters);
   };
 
   return (
@@ -30,8 +26,8 @@ export default function GamePage() {
       <Logo />
       <WordList>
         <ul style={{ listStyleType: "none" }}>
-          {allTypedInWords.map((word) => (
-            <li>{word}</li>
+          {allTypedInWords.map((word, index) => (
+            <li key={index}>{word}</li>
           ))}
         </ul>
       </WordList>
