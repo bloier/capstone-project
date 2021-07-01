@@ -3,18 +3,15 @@ package de.wordsmith.backend.service;
 import de.wordsmith.backend.model.Letters;
 import de.wordsmith.backend.model.Word;
 import de.wordsmith.backend.repository.WordflowRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class WordflowService {
 
     private final WordflowRepository wordflowRepository;
-
-    @Autowired
-    public WordflowService(WordflowRepository wordflowRepository) {
-        this.wordflowRepository = wordflowRepository;
-    }
+    private final PonsApiService ponsApiService;
 
     public Letters findRandomLetters(){
         return wordflowRepository.findRandomLetters();
@@ -22,5 +19,9 @@ public class WordflowService {
 
     public void addWordToWordsList(Word newWord) {
         wordflowRepository.addWordToWordsList(newWord);
+    }
+
+    public boolean doesWordExist (String wordText) {
+        return ponsApiService.doesWordExist(wordText);
     }
 }

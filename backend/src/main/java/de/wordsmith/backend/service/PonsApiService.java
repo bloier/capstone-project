@@ -1,12 +1,13 @@
 package de.wordsmith.backend.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+@RequiredArgsConstructor
 @Service
 public class PonsApiService {
 
@@ -14,11 +15,6 @@ public class PonsApiService {
     private final RestTemplate restTemplate;
     @Value("${secret}")
     private String secret;
-
-    @Autowired
-    public PonsApiService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
 
     public boolean doesWordExist(String wordText) {
         String requestString = ponsApi + wordText;
