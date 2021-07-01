@@ -7,7 +7,7 @@ import useWords from "../hooks/useWords";
 export default function GamePage() {
   const { letters } = useLetters();
   const [word, setWord] = useState("");
-  const { allTypedInWords, addWordToWordsList } = useWords();
+  const { doesWordExist, allTypedInWords, addWordToWordsList } = useWords();
 
   useEffect(() => {
     if (letters) {
@@ -17,7 +17,12 @@ export default function GamePage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    addWordToWordsList(word);
+    doesWordExist(word)
+    .then((exists) => {
+        if(exists) {
+            addWordToWordsList(word)
+        }
+    })
     setWord(letters);
   };
 
