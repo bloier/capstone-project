@@ -22,9 +22,4 @@ public class LettersController {
         return wordflowService.findRandomLetters();
     }
 
-    @PostMapping
-    public void addWordToWordsList(@RequestBody Word newWord) {
-        wordflowService.addWordToWordsList(newWord);
-    }
-
 }
