@@ -3,15 +3,18 @@ package de.wordsmith.backend.service;
 import de.wordsmith.backend.model.Letters;
 import de.wordsmith.backend.model.Word;
 import de.wordsmith.backend.repository.WordflowRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
 @Service
 public class WordflowService {
 
     private final WordflowRepository wordflowRepository;
     private final PonsApiService ponsApiService;
+
+    public WordflowService(WordflowRepository wordflowRepository, PonsApiService ponsApiService) {
+        this.wordflowRepository = wordflowRepository;
+        this.ponsApiService = ponsApiService;
+    }
 
     public Letters findRandomLetters(){
         return wordflowRepository.findRandomLetters();

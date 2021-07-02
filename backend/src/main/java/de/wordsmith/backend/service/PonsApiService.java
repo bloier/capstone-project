@@ -1,20 +1,23 @@
 package de.wordsmith.backend.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-@RequiredArgsConstructor
 @Service
 public class PonsApiService {
 
     private final String ponsApi = "https://api.pons.com/v1/dictionary?l=dede&q=";
     private final RestTemplate restTemplate;
+
     @Value("${secret}")
     private String secret;
+
+    public PonsApiService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     public boolean doesWordExist(String wordText) {
         String requestString = ponsApi + wordText;
