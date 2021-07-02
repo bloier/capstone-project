@@ -9,7 +9,6 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class PonsApiService {
 
-    private final String ponsApi = "https://api.pons.com/v1/dictionary?l=dede&q=";
     private final RestTemplate restTemplate;
 
     @Value("${secret}")
@@ -20,11 +19,12 @@ public class PonsApiService {
     }
 
     public boolean doesWordExist(String wordText) {
+        String ponsApi = "https://api.pons.com/v1/dictionary?l=dede&q=";
         String requestString = ponsApi + wordText;
         try {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("X-Secret", secret);
-            HttpEntity httpEntity = new HttpEntity(httpHeaders);
+            HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
             ResponseEntity<Void> response = restTemplate.exchange(requestString, HttpMethod.GET, httpEntity, Void.class);
             HttpStatus statusCode = response.getStatusCode();
             return statusCode.equals(HttpStatus.OK);
