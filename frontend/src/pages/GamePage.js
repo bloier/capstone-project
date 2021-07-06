@@ -10,12 +10,30 @@ export default function GamePage() {
   const { doesWordExist, allTypedInWords, addWordToWordsList } = useWords();
   const [error, setError] = useState(false);
   const [typedAlready, setTypedAlready] = useState(false);
+  const [isRunning, setIsRunning] = useState(false);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(30);
 
   useEffect(() => {
     if (letters) {
       setWord(letters);
     }
   }, [letters]);
+
+  useEffect(() => {
+    let interval = null;
+    if (isRunning) {
+      interval = setInterval(() => {
+        if (seconds > 0) {
+          setSeconds(seconds - 1);
+        }
+      }, 1000);
+    } else if (seconds === 0) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isRunning, seconds]);
+
 
   const handleSubmit = (event) => {
     setError(false);
@@ -25,7 +43,7 @@ export default function GamePage() {
       setTypedAlready(true);
     } else if (!allTypedInWords.includes(word)) {
       doesWordExist(word).then((exists) => {
-        if (exists) {
+        if (exists && seconds > 0) {
           addWordToWordsList(word);
         } else {
           setError(true);
@@ -35,9 +53,24 @@ export default function GamePage() {
     setWord(letters);
   };
 
+  function changeCircleColor() {
+    if (seconds < 20) {
+      document.getElementById("circle").style.borderColor = "#F0A821";
+    }
+    if (seconds < 6) {
+      document.getElementById("circle").style.borderColor = "#FF1C02";
+    }
+  }
+
   return (
     <Wrapper>
       <Logo />
+      <PositionCircleAndTimer>
+        <Circle id="circle" style={changeCircleColor()}/>
+        <div style={{ position: "absolute", bottom: "21px", left: "14px" }}>
+          {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+        </div>
+      </PositionCircleAndTimer>
       <WordList>
         <ul style={{ listStyleType: "none" }}>
           {allTypedInWords.map((word, index) => (
@@ -71,6 +104,7 @@ export default function GamePage() {
           )}
         </PositionMessage>
       </div>
+      <button onClick={() => setIsRunning(true)}>Spielen</button>
     </Wrapper>
   );
 }
@@ -83,6 +117,22 @@ const Wrapper = styled.div`
   justify-content: flex-start;
   background-: #ebf4ff;
   position: relative;
+`;
+const PositionCircleAndTimer = styled.div`
+  position: absolute;
+  height: 60px;
+  left: 60px;
+  right: 0px;
+  top: 110px;
+  bottom: 0px;
+`;
+const Circle = styled.div`
+  height: 60px;
+  width: 60px;
+  border-style: solid;
+  border-width: 5px;
+  border-radius: 50%;
+  border-color: #41b18e;
 `;
 const WordList = styled.section`
   margin-top: 120px;
