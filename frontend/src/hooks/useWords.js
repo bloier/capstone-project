@@ -1,14 +1,13 @@
 import axios from "axios";
-import {useState} from "react";
+import { useState } from "react";
 
 export default function useWords() {
-
   const [allTypedInWords, setAllTypedInWords] = useState([]);
 
   function doesWordExist(wordText) {
     return axios
-        .get(`/api/word?wordText=${wordText}`)
-        .then((response) => response.data)
+      .get(`/api/word?wordText=${wordText}`)
+      .then((response) => response.data);
   }
 
   function addWordToWordsList(wordText) {
@@ -20,5 +19,3 @@ export default function useWords() {
 
   return { doesWordExist, allTypedInWords, addWordToWordsList };
 }
-
-
