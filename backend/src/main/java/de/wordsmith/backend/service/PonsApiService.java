@@ -1,5 +1,6 @@
 package de.wordsmith.backend.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -11,9 +12,10 @@ public class PonsApiService {
 
     private final RestTemplate restTemplate;
 
-    @Value("${secret}")
+    @Value("${ponsapisecret:}")
     private String secret;
 
+    @Autowired
     public PonsApiService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
