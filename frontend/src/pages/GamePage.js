@@ -2,6 +2,7 @@ import styled from "styled-components/macro";
 import Logo from "../components/HomePageComponents/Logo";
 import useLetters from "../hooks/useLetters";
 import useWords from "../hooks/useWords";
+import usePoints from "../hooks/usePoints";
 import { useEffect, useState } from "react";
 
 export default function GamePage() {
@@ -13,13 +14,17 @@ export default function GamePage() {
   const [isRunning, setIsRunning] = useState(false);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(30);
+  const { points, getPoints, reset } = usePoints();
+
 
   useEffect(() => {
     if (letters) {
       setWord(letters);
+      getPoints()
     }
-  }, [letters]);
+  }, [letters, points]);
 
+  /** Click on button "Spielen" sets variable "isRunning" to true and activates timer with 30 seconds countdown **/
   useEffect(() => {
     let interval = null;
     if (isRunning) {
@@ -35,6 +40,11 @@ export default function GamePage() {
   }, [isRunning, seconds]);
 
 
+  /** The "handleSubmit" is effectively my game round.
+   * After pressing "Enter" the typed in word is checked:
+   * Was it already entered before? If not, API is checked
+   * --> if word exists and the timer is still running, word then gets added to list,
+   * points are increased and input field resets back to letters for the next word **/
   const handleSubmit = (event) => {
     setError(false);
     setTypedAlready(false);
@@ -45,6 +55,7 @@ export default function GamePage() {
       doesWordExist(word).then((exists) => {
         if (exists && seconds > 0) {
           addWordToWordsList(word);
+          getPoints();
         } else {
           setError(true);
         }
@@ -71,6 +82,7 @@ export default function GamePage() {
           {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
         </div>
       </PositionCircleAndTimer>
+      <PositionPoints>Punkte: <Points>{points}</Points></PositionPoints>
       <WordList>
         <ul style={{ listStyleType: "none" }}>
           {allTypedInWords.map((word, index) => (
@@ -82,6 +94,7 @@ export default function GamePage() {
         <form
           onSubmit={handleSubmit}
           style={{ position: "absolute", left: "38px" }}
+          id="wordform"
         >
           <Input
             type="text"
@@ -104,7 +117,7 @@ export default function GamePage() {
           )}
         </PositionMessage>
       </div>
-      <button onClick={() => setIsRunning(true)}>Spielen</button>
+      <button onClick={() => (setIsRunning(true) && reset() && getPoints())}>Spielen</button>
     </Wrapper>
   );
 }
@@ -121,7 +134,8 @@ const Wrapper = styled.div`
 const PositionCircleAndTimer = styled.div`
   position: absolute;
   height: 60px;
-  left: 60px;
+  width: 60px;
+  left: 55px;
   right: 0px;
   top: 110px;
   bottom: 0px;
@@ -134,6 +148,30 @@ const Circle = styled.div`
   border-radius: 50%;
   border-color: #41b18e;
 `;
+const PositionPoints = styled.h3`
+  position: absolute;
+  height: 30px;
+  width: 140px;
+  left: 175px;
+  right: 0px;
+  top: 95px;
+  bottom: 0px;
+  color: #3b1010;
+  margin: 2rem;
+  font-weight: 400;
+  font-size: 17px;
+`
+const Points = styled.span`
+  background: #ffe5cf;
+  width: 51px;
+  height: 30px;
+  padding: 5px 12px;
+  line-height: 1;
+  -webkit-border-radius: 1rem;
+  -moz-border-radius: 1rem;
+  border-radius: 1rem;
+  color: #3b1010;
+`
 const WordList = styled.section`
   margin-top: 120px;
   margin-bottom: 0px;
