@@ -25,4 +25,14 @@ public class WordController {
     public void addWordToWordsList(@RequestBody Word newWord) {
         wordflowService.addWordToWordsList(newWord);
     }
+
+    @GetMapping()
+    public int getPoints () {
+        return wordflowService.getPoints();
+    }
+
+    @PostMapping
+    public void reset(){
+        wordflowService.reset();
+    }
 }

@@ -22,11 +22,27 @@ public class WordflowService {
         return wordflowRepository.findRandomLetters();
     }
 
-    public void addWordToWordsList(Word newWord) {
-        wordflowRepository.addWordToWordsList(newWord);
-    }
-
     public boolean doesWordExist (String wordText) {
         return ponsApiService.doesWordExist(wordText);
     }
+
+    public void addWordToWordsList(Word newWord) {
+        wordflowRepository.addWordToWordsList(newWord);
+        calculateAndAddPoints(newWord);
+    }
+
+    private void calculateAndAddPoints(Word newWord) {
+        int increasedPoints = wordflowRepository.getPoints() + 10;
+        System.out.println(increasedPoints);
+        wordflowRepository.setPoints(increasedPoints);
+    }
+
+    public int getPoints () {
+        return wordflowRepository.getPoints();
+    }
+
+    public void reset(){
+        wordflowRepository.reset();
+    }
+
 }
