@@ -2,7 +2,6 @@ package de.wordsmith.backend.controller;
 
 import de.wordsmith.backend.service.PointsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,11 +15,6 @@ public class PointsController {
     @Autowired
     public PointsController(PointsService pointsService) {
         this.pointsService = pointsService;
-    }
-
-    @GetMapping()
-    public int getPoints () {
-        return pointsService.getPoints();
     }
 
     @PostMapping

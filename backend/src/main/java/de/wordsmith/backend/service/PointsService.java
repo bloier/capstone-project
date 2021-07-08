@@ -13,14 +13,10 @@ public class PointsService {
         this.wordflowRepository = wordflowRepository;
     }
 
-    public void calculateAndAddPoints(Word newWord) {
+    public int calculateAndAddPoints(Word newWord) {
         int increasedPoints = wordflowRepository.getPoints() + 10;
-        System.out.println(increasedPoints);
         wordflowRepository.setPoints(increasedPoints);
-    }
-
-    public int getPoints () {
-        return wordflowRepository.getPoints();
+        return increasedPoints;
     }
 
     public void reset(){

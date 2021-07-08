@@ -11,11 +11,13 @@ public class WordflowService {
 
     private final WordflowRepository wordflowRepository;
     private final PonsApiService ponsApiService;
+    private final PointsService pointsService;
 
     @Autowired
-    public WordflowService(WordflowRepository wordflowRepository, PonsApiService ponsApiService) {
+    public WordflowService(WordflowRepository wordflowRepository, PonsApiService ponsApiService, PointsService pointsService) {
         this.wordflowRepository = wordflowRepository;
         this.ponsApiService = ponsApiService;
+        this.pointsService = pointsService;
     }
 
     public Letters findRandomLetters(){
@@ -26,23 +28,9 @@ public class WordflowService {
         return ponsApiService.doesWordExist(wordText);
     }
 
-    public void addWordToWordsList(Word newWord) {
+    public int addWordAndGetPoints(Word newWord) {
         wordflowRepository.addWordToWordsList(newWord);
-        calculateAndAddPoints(newWord);
-    }
-
-    private void calculateAndAddPoints(Word newWord) {
-        int increasedPoints = wordflowRepository.getPoints() + 10;
-        System.out.println(increasedPoints);
-        wordflowRepository.setPoints(increasedPoints);
-    }
-
-    public int getPoints () {
-        return wordflowRepository.getPoints();
-    }
-
-    public void reset(){
-        wordflowRepository.reset();
+        return pointsService.calculateAndAddPoints(newWord);
     }
 
 }
