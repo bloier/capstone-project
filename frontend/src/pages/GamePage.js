@@ -8,21 +8,20 @@ import { useEffect, useState } from "react";
 export default function GamePage() {
   const { letters } = useLetters();
   const [word, setWord] = useState("");
-  const { doesWordExist, allTypedInWords, addWordToWordsList } = useWords();
+  const { points, doesWordExist, allTypedInWords, addWordAndGetPoints } = useWords();
   const [error, setError] = useState(false);
   const [typedAlready, setTypedAlready] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(30);
-  const { points, getPoints, reset } = usePoints();
+  const { reset } = usePoints();
 
 
   useEffect(() => {
     if (letters) {
       setWord(letters);
-      getPoints()
     }
-  }, [letters, points]);
+  }, [letters]);
 
   /** Click on button "Spielen" sets variable "isRunning" to true and activates timer with 30 seconds countdown **/
   useEffect(() => {
@@ -54,8 +53,7 @@ export default function GamePage() {
     } else if (!allTypedInWords.includes(word)) {
       doesWordExist(word).then((exists) => {
         if (exists && seconds > 0) {
-          addWordToWordsList(word);
-          getPoints();
+          addWordAndGetPoints(word);
         } else {
           setError(true);
         }
@@ -117,7 +115,14 @@ export default function GamePage() {
           )}
         </PositionMessage>
       </div>
-      <button onClick={() => (setIsRunning(true) && reset() && getPoints())}>Spielen</button>
+      <StyledButton onClick={() => {
+        setIsRunning(true)
+        reset()
+      }}>Spielen</StyledButton>
+      <PositionHelpText>
+        <div style={{fontSize: "38px"}}>&#x3F;</div>
+        <p style={{ position: "absolute", bottom: "76px", left: "35px" }}>Tippe Wörter ein, die mit den oben angezeigten Buchstaben beginnen.</p>
+      </PositionHelpText>
     </Wrapper>
   );
 }
@@ -162,7 +167,7 @@ const PositionPoints = styled.h3`
   font-size: 17px;
 `
 const Points = styled.span`
-  background: #ffe5cf;
+  background: #eacccc;
   width: 51px;
   height: 30px;
   padding: 5px 12px;
@@ -236,3 +241,19 @@ const CrossMark = styled.div`
   }
 `;
 const Message = styled(CrossMark)``;
+const StyledButton = styled.button`
+  border-radius: 50em;
+  border: 2px solid;
+  padding: 8px 14px;
+  border-color: #5e5eff;
+  font-size: 16px;
+  position: absolute;
+  top: 500px;
+`
+const PositionHelpText = styled.div`
+  position: absolute;
+  left: 40px;
+  right: 0px;
+  top: 550px;
+  bottom: 0px;
+`

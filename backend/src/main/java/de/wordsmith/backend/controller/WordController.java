@@ -17,22 +17,14 @@ public class WordController {
     }
 
     @GetMapping()
-    public boolean doesWordExist (@RequestParam String wordText) {
+    public boolean doesWordExist(@RequestParam String wordText) {
         return wordflowService.doesWordExist(wordText);
     }
 
     @PostMapping
-    public void addWordToWordsList(@RequestBody Word newWord) {
-        wordflowService.addWordToWordsList(newWord);
-    }
-
-    @GetMapping()
-    public int getPoints () {
-        return wordflowService.getPoints();
-    }
-
-    @PostMapping
-    public void reset(){
-        wordflowService.reset();
+    public int addWordAndGetPoints(@RequestBody Word newWord) {
+        return wordflowService.addWordAndGetPoints(newWord);
     }
 }
+
+

@@ -2,15 +2,7 @@ import axios from "axios";
 import {useState} from "react";
 
 export default function usePoints() {
-    const [points, setPoints] = useState(null);
-
-    function getPoints() {
-        return axios
-            .get(`/api/points`)
-            .then((response) => response.data)
-            .then(setPoints)
-            .catch((error) => console.error(error.message));
-    }
+    const [points, setPoints] = useState(0);
 
     function reset(points) {
         axios
@@ -19,5 +11,5 @@ export default function usePoints() {
             .catch((error) => console.error(error.message));
     }
 
-    return { points, getPoints, reset };
+    return { points, reset };
 }
