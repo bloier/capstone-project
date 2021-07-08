@@ -4,15 +4,18 @@ import { Link } from "react-router-dom";
 export default function CardWordOfTheDay() {
   return (
     <Card>
-      <CardWord>dediziert</CardWord>
+      <CardWord>„dediziert“</CardWord>
       <Line />
       <Definition>
-        Bedeutet "jemandem gewidmet" oder "zugehörig". Wird häufig mit dezidiert
+        Bedeutet „jemandem gewidmet“ oder „zugehörig“. Wird häufig mit dezidiert
         (entschieden) verwechselt.
       </Definition>
       <Line />
       <CardButton>
-        <Link to="/wortdestages/beispiele" style={{ textDecoration: "none" }}>
+        <Link
+          to="/wortdestages/beispiele"
+          style={{ textDecoration: "none", color: "black" }}
+        >
           Verwendungsbeispiele
         </Link>
       </CardButton>
@@ -28,23 +31,25 @@ const Card = styled.div`
   background: #eacccc;
   color: #000;
   border-radius: 20px;
-  font-family: sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 const CardWord = styled.h3`
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 500;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  color: #004ab3;
+  margin-top: 3px;
+  margin-bottom: 3px;
 `;
 const Definition = styled.p`
   text-align: center;
+  font-size: 15px;
 `;
 const CardButton = styled.button`
-  margin: auto;
-  width: 50%;
+  border-radius: 50em;
+  border: 2px solid #7094c7;
+  padding: 5px;
 `;
 const Line = styled.div`
   border: 1px solid #7094c7;
